@@ -12,7 +12,7 @@ def panel_create(request):
 	if form.is_valid():
 		instance = form.save(commit=False)
 		instance.save()
-		# Message success
+		# Adding message for success or error
 		messages.success(request, "Successfully Created!")
 		return HttpResponseRedirect(instance.get_absolute_url())
 	else:
