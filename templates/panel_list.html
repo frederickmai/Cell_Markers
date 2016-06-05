@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1> {{ title }} is working </h1>
+<h2>Choose your cells or markers!</h2>
+{% for obj in object_list %}
+/panel/id/
+{% url 'panel:detail' id=obj.id %}
+<a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a><br/>
+{{obj.timestamp}}<br/>0
+{{obj.updated}}<br/>
+{{obj.id}}<br/>
+{% endfor %}
+  
+{% endblock content %}

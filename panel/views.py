@@ -15,8 +15,6 @@ def panel_create(request):
 		# Adding message for success or error
 		messages.success(request, "Successfully Created!")
 		return HttpResponseRedirect(instance.get_absolute_url())
-	else:
-		messages.error(request, "Failed to Create, make sure you type in all the required field")
 	context = {
 		"form": form,
 	}
@@ -36,7 +34,7 @@ def panel_list(request): # list items
 		"object_list": queryset,
 		"title": "List"
 	}
-	return render(request, "base.html", context)
+	return render(request, "panel_list.html", context)
 
 def panel_update(request, id=None):
 	instance = get_object_or_404(panel, id=id)
