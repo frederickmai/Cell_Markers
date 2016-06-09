@@ -45,7 +45,6 @@ def panel_update(request, id=None):
 		# Message success
 		messages.success(request, "Successfully Updated!")
 		messages.success(request, "<a href='#'>Item</a> Saved", extra_tags="html_safe")
-		messages.success(request, "Summer")
 		return HttpResponseRedirect(instance.get_absolute_url())
 	context = {
 		"title": instance.title,
