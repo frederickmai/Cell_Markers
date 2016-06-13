@@ -8,4 +8,6 @@ class panelForm(forms.ModelForm):
 		fields = [
 			"title",
 			"description",
+			"image",
+			"cells",
 		]
