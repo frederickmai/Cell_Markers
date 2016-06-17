@@ -1,3 +1,4 @@
+from urllib.parse import quote_plus
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
@@ -21,11 +22,13 @@ def panel_create(request):
 	}
 	return render(request, "panel_form.html", context)
 
-def panel_detail(request,id=None):
-	instance = get_object_or_404(panel, id=id)
+def panel_detail(request,slug=None):
+	instance = get_object_or_404(panel, slug=slug)
+	share_string = quote_plus(instance.description)
 	context = {
 		"title": instance.title,
 		"instance": instance,
+		"share_string": share_string
 	}
 	return render(request, "panel_detail.html", context)
 
@@ -51,8 +54,8 @@ def panel_list(request): # list items
 
 
 
-def panel_update(request, id=None):
-	instance = get_object_or_404(panel, id=id)
+def panel_update(request, slug=None):
+	instance = get_object_or_404(panel, slug=slug)
 	form = panelForm(request.POST or None, request.FILES or None, instance=instance)
 	if form.is_valid():
 		instance = form.save(commit=False)
@@ -68,8 +71,8 @@ def panel_update(request, id=None):
 	}
 	return render(request, "panel_form.html", context)
 
-def panel_delete(request, id=None):
-	instance = get_object_or_404(panel, id=id)
+def panel_delete(request, slug=None):
+	instance = get_object_or_404(panel, slug=slug)
 	instance.delete()
 	messages.success(request, "Successfully Deleted!")
 	return redirect("panel:list")
