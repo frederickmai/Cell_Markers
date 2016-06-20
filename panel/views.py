@@ -1,7 +1,7 @@
 from urllib.parse import quote_plus
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .forms import panelForm
@@ -10,9 +10,15 @@ from .models import panel
 # Create your views here.
 # Class based or function based views
 def panel_create(request):
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise Http404
+	if not request.user.is_authenticated():
+		raise Http404
+		
 	form = panelForm(request.POST or None, request.FILES or None)
 	if form.is_valid():
 		instance = form.save(commit=False)
+		instance.user = request.user
 		instance.save()
 		# Adding message for success or error
 		messages.success(request, "Successfully Created!")
@@ -55,6 +61,8 @@ def panel_list(request): # list items
 
 
 def panel_update(request, slug=None):
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise Http404
 	instance = get_object_or_404(panel, slug=slug)
 	form = panelForm(request.POST or None, request.FILES or None, instance=instance)
 	if form.is_valid():
@@ -72,6 +80,8 @@ def panel_update(request, slug=None):
 	return render(request, "panel_form.html", context)
 
 def panel_delete(request, slug=None):
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise Http404
 	instance = get_object_or_404(panel, slug=slug)
 	instance.delete()
 	messages.success(request, "Successfully Deleted!")
