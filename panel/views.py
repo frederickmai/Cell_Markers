@@ -1,8 +1,10 @@
 from urllib.parse import quote_plus
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
 
 from .forms import panelForm
 from .models import panel
@@ -30,6 +32,9 @@ def panel_create(request):
 
 def panel_detail(request,slug=None):
 	instance = get_object_or_404(panel, slug=slug)
+	if instance.publish > timezone.now().date() or instance.draft:
+		if not request.user.is_staff or not request.user.is_superuser:
+			raise Http404
 	share_string = quote_plus(instance.description)
 	context = {
 		"title": instance.title,
@@ -39,7 +44,20 @@ def panel_detail(request,slug=None):
 	return render(request, "panel_detail.html", context)
 
 def panel_list(request): # list items
-	queryset_list = panel.objects.all()
+	today = timezone.now().date()
+	queryset_list = panel.objects.active()
+	if request.user.is_staff or request.user.is_superuser:
+		queryset_list = panel.objects.all()
+	query = request.GET.get('q')
+	if query:
+		queryset_list = queryset_list.filter(
+			Q(title_icontains=query) |
+			Q(description_icontains=query)|
+			Q(slug_icontains=query)|
+			Q(markers_icontains=query)|
+			Q(uer__first_name__icontains=query)|
+			Q(uer__last_name__icontains=query)
+		).distinct()
 	paginator = Paginator(queryset_list, 25) # Show 25 queryset per page
 	page_request_var = "page"
 	page = request.GET.get(page_request_var)
@@ -55,6 +73,7 @@ def panel_list(request): # list items
 		"object_list": queryset,
 		"title": "List",
 		"page_request_var":page_request_var,
+		"today": today,
 	}
 	return render(request, "panel_list.html", context)
 

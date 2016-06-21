@@ -10,4 +10,6 @@ class panelForm(forms.ModelForm):
 			"description",
 			"image",
 			"cells",
+			"draft",
+			"publish",
 		]

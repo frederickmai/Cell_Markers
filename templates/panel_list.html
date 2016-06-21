@@ -6,6 +6,11 @@
 <div class="col-sm-6 col-sm-offset-3"> 
 <h1> {{ title }} </h1>
 <h2>Choose your cells or markers!</h2>
+<form method='GET' action=''>
+  <input type='text' name='q' placeholder='Search Panel' value='{{ request.GET.q }}'/>
+  <input type='submit' value='Search' />
+</form>
+  
 <div class="row">
 {% for obj in object_list %}
   <div class="col-sm-6">
@@ -14,7 +19,8 @@
     	<img src="{{ obj.image.url }}" class='img-responsive' />
     	{% endif %}
       <div class="caption">
-        <h3><a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a> <small> {{obj.timestamp|timesince}} ago </small> </h3>
+        {% if obj.draft %}<h3>USER ONLY: Draft</h3> {% endif %} {% if obj.publish > today %} <h3>USER ONLY: Future Panel</h3> {% endif %} 
+        <h3><a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a> <small> {{obj.publish}} </small> </h3>
         {% if obj.user.get_full_name %}<p>Author: {{ obj.user.get_full_name }}</p>{% endif %}
         <p>{{obj.description|linebreaks|truncatechars:150}}</p>
         <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a> <br/><br/><a href="need to work on this!!!!" class="btn btn-danger" role="button">Delete</a></p>
@@ -28,7 +34,7 @@
 <div class="pagination">
     <span class="step-links">
         {% if object_list.has_previous %}
-            <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}">previous</a>
+            <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -36,7 +42,7 @@
         </span>
 
         {% if object_list.has_next %}
-            <a href="?{{ page_request_var }}={{ object_list.next_page_number }}">next</a>
+            <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>
         {% endif %}
     </span>
 </div>

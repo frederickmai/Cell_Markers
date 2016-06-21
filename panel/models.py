@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import pre_save
+from django.utils import timezone
 from django.utils.text import slugify
 
 from .celltype import celltype
@@ -12,7 +13,13 @@ from .ablist import *
 # MVC model view controller
 # When ever models.py changes, run python manage.py makemigrations and then run python manage.py migrate
 
-
+#panel.objects.all() is a type of model manager too
+#panel.objects.create(user=user, title="some title") creates instance itself
+class panel_manager(models.Manager):
+	def active(self, *args, **kwargs):
+		# panel.objects.all() = super(panel_manager, self.all())
+		return super(panel_manager, self).filter(draft=False).filter(publish_lte=timezone.now())
+	
 def upload_location(instance, filename):
 	#filebase, extension = filename.split(".")
 	#return "%s/%s.%s" %(instance.id, instance.id, extension)
@@ -33,9 +40,14 @@ class panel(models.Model):
 	width_field = models.IntegerField(default=0)
 	description = models.TextField()
 	# Usually main text use textfield
+	draft = models.BooleanField(default=False)
+	publish = models.DateField(auto_now=False, auto_now_add=False)
 
 	updated = models.DateTimeField(auto_now=True, auto_now_add=False)
 	timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
+	
+	objects = panel_manager()
+	
 	cells = models.CharField(max_length=50, choices=celltype.cell_types())
 	markers = models.CharField(max_length = 120, default=[display[1] for display in ablist.total_t_cell_list()], editable=True)
 
