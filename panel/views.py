@@ -51,12 +51,12 @@ def panel_list(request): # list items
 	query = request.GET.get('q')
 	if query:
 		queryset_list = queryset_list.filter(
-			Q(title_icontains=query) |
-			Q(description_icontains=query)|
-			Q(slug_icontains=query)|
-			Q(markers_icontains=query)|
-			Q(uer__first_name__icontains=query)|
-			Q(uer__last_name__icontains=query)
+			Q(title__icontains=query) |
+			Q(description__icontains=query)|
+			Q(slug__icontains=query)|
+			Q(markers__icontains=query)|
+			Q(user__first_name__icontains=query)|
+			Q(user__last_name__icontains=query)
 		).distinct()
 	paginator = Paginator(queryset_list, 25) # Show 25 queryset per page
 	page_request_var = "page"

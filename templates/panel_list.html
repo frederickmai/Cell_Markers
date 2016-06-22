@@ -9,7 +9,7 @@
 <form method='GET' action=''>
   <input type='text' name='q' placeholder='Search Panel' value='{{ request.GET.q }}'/>
   <input type='submit' value='Search' />
-</form>
+</form> <br/>
   
 <div class="row">
 {% for obj in object_list %}
@@ -34,7 +34,7 @@
 <div class="pagination">
     <span class="step-links">
         {% if object_list.has_previous %}
-            <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
+            <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %} &q={{ request.GET.q }}{% endif %}">previous</a>
         {% endif %}
 
         <span class="current">
