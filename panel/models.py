@@ -18,7 +18,7 @@ from .ablist import *
 class panel_manager(models.Manager):
 	def active(self, *args, **kwargs):
 		# panel.objects.all() = super(panel_manager, self.all())
-		return super(panel_manager, self).filter(draft=False).filter(publish__lte=timezone.now())
+		return super(panel_manager, self).filter(draft=False)#.filter(publish__lte=timezone.now())
 	
 def upload_location(instance, filename):
 	#filebase, extension = filename.split(".")
