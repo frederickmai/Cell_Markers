@@ -15,7 +15,7 @@
 <p>Author: {{ instance.user.get_full_name }} </p>
 {% endif %}
 
-<p><div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+<p><div class="fb-like" data-href="{{ instance.build_absolute_uri}}" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 </p>
 	
 {{instance.title|linebreaks}}<br/>
