@@ -1,4 +1,14 @@
-from urllib.parse import quote_plus
+try:
+	from urllib import quote_plus #python 2
+except:
+	pass
+
+try:
+	from urllib.parse import quote_plus #python 3
+except:
+	pass
+
+
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
@@ -14,8 +24,8 @@ from .models import panel
 def panel_create(request):
 	if not request.user.is_staff or not request.user.is_superuser:
 		raise Http404
-	if not request.user.is_authenticated():
-		raise Http404
+# 	if not request.user.is_authenticated():
+# 		raise Http404
 		
 	form = panelForm(request.POST or None, request.FILES or None)
 	if form.is_valid():

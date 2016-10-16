@@ -28,13 +28,14 @@
         {% if obj.user.get_full_name %}<p>Author: {{ obj.user.get_full_name }}</p>{% endif %}
         <!--     Display Panel Description     -->
         <p>{{obj.description|linebreaks|truncatechars:150}}</p>
-        <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a> <br/><br/>
+        <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a> 
+           <br/><br/>
            <a href="need to work on this!!!!" class="btn btn-danger" role="button">Delete</a></p>
       </div>
     </div>
   </div>
 
-{% cycle "" "<div class='col-sm-12'><hr/></div></div><div class='row'>" %}
+{% cycle "" "<div class='col-sm-6'><hr/></div></div><div class='row'>" %}
 {% endfor %}
 
 <div class="pagination">
