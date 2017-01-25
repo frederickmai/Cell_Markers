@@ -19,9 +19,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 urlpatterns = [
-#     url(r'^/', include('panel.urls', namespace='panel')),
     url(r'^admin/', admin.site.urls),
-    url(r'^panel/', include('panel.urls', namespace='panel')),
+    url(r'', include('panel.urls', namespace='panel')),
     # $ means once address is more than panel/, it will not directed to this view
     # url(r'^panel/$', '<appname>.views.<function_name>'),
 ]

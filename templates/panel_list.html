@@ -1,11 +1,15 @@
 {% extends "base.html" %}
+
+
+{% block head_title %}Welcome | {% endblock %}
+
 {% block content %}
 
-
+<h1>Cellmarkers 2.0 is coming soon!</h1>
 <!-- offset makes margin on the left -->
 <!-- <div class="col-sm-6 col-sm-offset-3">  -->
-<h1> {{ title }} </h1>
-<h2>Choose your cells or markers!</h2>
+
+<h1>Choose your cells or markers!</h1>
 <form method='GET' action=''>
   <input type='text' name='q' placeholder='Search Panel' value='{{ request.GET.q }}'/>
   <input type='submit' value='Search' />
@@ -30,7 +34,7 @@
         <p>{{obj.description|linebreaks|truncatechars:150}}</p>
         <p><a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a> 
            <br/><br/>
-           <a href="need to work on this!!!!" class="btn btn-danger" role="button">Delete</a></p>
+           <a href="{{ obj.get_absolute_url}}delete" class="btn btn-danger" role="button">Delete</a></p>
       </div>
     </div>
   </div>
@@ -54,6 +58,53 @@
     </span>
 </div>
 
+<!--   # Copied from other source -->
+<div class="container">
+    <div class="row clearfix">
+		<div class="col-md-12 column">
+			<table class="table table-bordered table-hover" id="tab_logic">
+				<thead>
+					<tr >
+						<th class="text-center">
+							#
+						</th>
+						<th class="text-center">
+							Cell Types
+						</th>
+						<th class="text-center">
+							Intracellular or Extracellular Markers
+						</th>
+						<th class="text-center">
+							Fluorophore
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id='addr0'>
+						<td>
+						 1
+						</td>
+						<td>
+						<input type="text" name='name0'  placeholder='Cell Types' class="form-control"/>
+						</td>
+						<td>
+						<input type="text" name='mail0' placeholder='Intracellular or Extracellular Markers' class="form-control"/>
+						</td>
+						<td>
+						<input type="text" name='mobile0' placeholder='Fluorophore' class="form-control"/>
+						</td>
+					</tr>
+                    <tr id='addr1'></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<a id="add_row" class="btn btn-default pull-left">Add Row</a><a id='delete_row' class="pull-right btn btn-default">Delete Row</a>
+</div>
+  
+  
+  
+  
 </div>
 <!-- </div> -->
   

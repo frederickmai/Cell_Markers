@@ -26,7 +26,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'zifengmai@gmail.com'
+EMAIL_HOST_PASSWORD = 'frederickmai'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
+''' 
+If using gmail, you will need to unlock Captcha 
+to enable Django to send for you:
+https://acounts.google.com/displayunlockcaptcha
+'''
 # Application definition
 
 INSTALLED_APPS = [
@@ -36,6 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # third party apps
+    'crispy_forms',
+    # my apps
     'panel',
 ]
 
@@ -129,3 +142,6 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media_cdn")
+
+# Default template pack for crispy_forms
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
