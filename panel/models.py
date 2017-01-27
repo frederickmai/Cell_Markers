@@ -80,5 +80,16 @@ def pre_save_panel_receiver(sender, instance, *args, **kwargs):
 		instance.slug = create_slug(instance)
 
 pre_save.connect(pre_save_panel_receiver, sender=panel)
+
+class UserInfo(models.Model):
+	email = models.EmailField()
+	full_name = models.CharField(max_length=120, blank=True, null=True)
+	timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+	updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+	
+	def __str__(self):
+		return self.email
+		
+
 # class antibody(object):
 # 	"""docstring for antibody"""
