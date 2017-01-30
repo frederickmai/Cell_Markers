@@ -2,8 +2,11 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import panel
+from .models import SignUp
 
-class  facsModelAdmin(admin.ModelAdmin):
+
+
+class facsModelAdmin(admin.ModelAdmin):
 	"""Google Model Admin to know more"""
 	list_display = ["title", "cells", "markers", "updated", "timestamp",]
 	list_filter = ["cells", "updated"] # Want markers filtered later
@@ -14,5 +17,11 @@ class  facsModelAdmin(admin.ModelAdmin):
 		"""docstring for ClassName"""
 		model = panel
 
+class SignUpAdmin(admin.ModelAdmin):
+	list_display = ["__unicode__", "timestamp", "updated"]
+	class Meta:
+		model = SignUp
+
 admin.site.register(panel, facsModelAdmin)
 #Register model "panel" in admin site
+admin.site.register(SignUp)
