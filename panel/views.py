@@ -16,7 +16,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
-from .forms import panelForm
+from .forms import panelForm, SignUpForm
 from .models import panel
 
 # Create your views here.
@@ -58,6 +58,7 @@ def panel_list(request): # list items
 	queryset_list = panel.objects.active()
 	if request.user.is_staff or request.user.is_superuser:
 		queryset_list = panel.objects.all()
+		sign_up_form = SignUpForm()
 	query = request.GET.get('q')
 	if query:
 		queryset_list = queryset_list.filter(
@@ -84,6 +85,7 @@ def panel_list(request): # list items
 		"title": "List",
 		"page_request_var":page_request_var,
 		"today": today,
+		"sign_up_form": sign_up_form
 	}
 	return render(request, "panel_list.html", context)
 
@@ -115,3 +117,11 @@ def panel_delete(request, slug=None):
 	instance.delete()
 	messages.success(request, "Successfully Deleted!")
 	return redirect("panel:list")
+
+def sign_up_home(request):
+	title = "My title %s" %(request.user)
+	form = SignUpForm()
+	context = {
+		"sign_up_form": form
+	}
+	return render(request, "panel_list.html", context)

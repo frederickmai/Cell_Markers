@@ -14,7 +14,12 @@
   <input type='text' name='q' placeholder='Search Panel' value='{{ request.GET.q }}'/>
   <input type='submit' value='Search' />
 </form> <br/>
-  
+
+<!-- newly added signupform -->
+<form method='' action=''>
+{{ sign_up_form }}
+</form>
+
 <div class="row">
 {% for obj in object_list %}
   <div class="col-sm-6">

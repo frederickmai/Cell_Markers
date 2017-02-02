@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from .models import panel
 from .models import SignUp
-
+from .forms import SignUpForm
 
 
 class facsModelAdmin(admin.ModelAdmin):
@@ -19,8 +19,9 @@ class facsModelAdmin(admin.ModelAdmin):
 
 class SignUpAdmin(admin.ModelAdmin):
 	list_display = ["__unicode__", "timestamp", "updated"]
-	class Meta:
-		model = SignUp
+	form = SignUpForm
+# 	class Meta:
+# 		model = SignUp
 
 admin.site.register(panel, facsModelAdmin)
 #Register model "panel" in admin site
