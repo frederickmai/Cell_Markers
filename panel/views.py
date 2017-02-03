@@ -55,10 +55,11 @@ def panel_detail(request,slug=None):
 
 def panel_list(request): # list items
 	today = timezone.now().date()
+	sign_up_form = SignUpForm()
 	queryset_list = panel.objects.active()
 	if request.user.is_staff or request.user.is_superuser:
 		queryset_list = panel.objects.all()
-		sign_up_form = SignUpForm()
+		
 	query = request.GET.get('q')
 	if query:
 		queryset_list = queryset_list.filter(
@@ -118,10 +119,10 @@ def panel_delete(request, slug=None):
 	messages.success(request, "Successfully Deleted!")
 	return redirect("panel:list")
 
-def sign_up_home(request):
-	title = "My title %s" %(request.user)
-	form = SignUpForm()
-	context = {
-		"sign_up_form": form
-	}
-	return render(request, "panel_list.html", context)
+# def sign_up_home(request):
+# 	title = "My title %s" %(request.user)
+# 	form = SignUpForm()
+# 	context = {
+# 		"sign_up_form": form
+# 	}
+# 	return render(request, "panel_list.html", context)

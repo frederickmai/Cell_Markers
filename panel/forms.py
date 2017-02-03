@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import panel
+from .models import panel, SignUp
 
 class panelForm(forms.ModelForm):
 	class Meta:
