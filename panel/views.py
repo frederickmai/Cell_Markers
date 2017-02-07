@@ -59,7 +59,6 @@ def panel_list(request): # list items
 	queryset_list = panel.objects.active()
 	if request.user.is_staff or request.user.is_superuser:
 		queryset_list = panel.objects.all()
-		
 	query = request.GET.get('q')
 	if query:
 		queryset_list = queryset_list.filter(
