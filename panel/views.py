@@ -55,7 +55,18 @@ def panel_detail(request,slug=None):
 
 def panel_list(request): # list items
 	today = timezone.now().date()
-	sign_up_form = SignUpForm()
+	
+	### This part is for signUpForm
+	signUpForm = SignUpForm(request.POST or None)
+	if form.is_valid():
+		instance = form.save(commit=False) # This step allows criteria to be validated before saving
+		full_name = form.cleaned_data.get("full_name")
+		if not full_name:
+			full_name = "Anonymous"
+		instance.full_name = full_name
+		instance.save()
+	### This part is for signUpForm
+	
 	queryset_list = panel.objects.active()
 	if request.user.is_staff or request.user.is_superuser:
 		queryset_list = panel.objects.all()
@@ -83,9 +94,9 @@ def panel_list(request): # list items
 	context = {
 		"object_list": queryset,
 		"title": "List",
-		"page_request_var":page_request_var,
+		"page_request_var": page_request_var,
 		"today": today,
-		"sign_up_form": sign_up_form
+		"signUpForm": signUpForm
 	}
 	return render(request, "panel_list.html", context)
 

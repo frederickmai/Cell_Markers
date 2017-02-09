@@ -17,7 +17,7 @@
 
 <!-- newly added signupform -->
 <form method='POST' action=''> {% csrf_token %}
-{{ sign_up_form }}
+{{ signUpForm.as_p }}
 <input type='submit' value='Sign Up' />
 </form>
 
